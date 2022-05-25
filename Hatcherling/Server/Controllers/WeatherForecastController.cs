@@ -23,7 +23,7 @@ namespace Hatcherling.Server.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            PostgreSQLConnection data = new PostgreSQLConnection();
+            PostgreSQLSDataAccess data = new PostgreSQLConnection();
 
             data.Connect();
 

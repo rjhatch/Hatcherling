@@ -1,22 +1,22 @@
-﻿using Npgsql;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace PostgreSQLDataAccess.Services
 {
     public class DbService : IDbService
     {
-        private readonly NpgsqlConnection _db;
+        private readonly IConfiguration _db;
 
-        public DbService(config)
+        public DbService(IConfiguration config)
         {
-            _db = new NpgsqlConnection(config.GetConnectionString(""));
+            _db = config;
         }
 
-        public Task<T> Delete<T>(string command, object parms)
+        public Task<T> DeleteAsync<T>(string command, object parms)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<T>> GetAll<T>(string command, object parms)
+        public Task<List<T>> GetAllAsync<T>(string command, object parms)
         {
             throw new NotImplementedException();
         }
@@ -26,12 +26,12 @@ namespace PostgreSQLDataAccess.Services
             throw new NotImplementedException();
         }
 
-        public Task<T> Insert<T>(string command, object parms)
+        public Task<T> InsertAsync<T>(string command, object parms)
         {
             throw new NotImplementedException();
         }
 
-        public Task<T> Update<T>(string command, object parms)
+        public Task<T> UpdateAsync<T>(string command, object parms)
         {
             throw new NotImplementedException();
         }

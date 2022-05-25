@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hatcherling.Client", "Hatch
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hatcherling.Shared", "Hatcherling\Shared\Hatcherling.Shared.csproj", "{965665AD-BE48-4413-B47F-0F7729786A18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostgreSQLDataAccess", "PostgreSQLDataAccess\PostgreSQLDataAccess.csproj", "{A9573F74-7528-466A-B68A-5ADE078CC3DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostgreSQLDataAccess", "PostgreSQLDataAccess\PostgreSQLDataAccess.csproj", "{A9573F74-7528-466A-B68A-5ADE078CC3DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
