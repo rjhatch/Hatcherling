@@ -1,9 +1,14 @@
+using PostgreSQLDAL;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddSingleton<IPostgreSQLDataAccess, PostgreSQLDataAccess>();
+builder.Services.AddSingleton<IService<Person>, PeopleService>();
 
 var app = builder.Build();
 

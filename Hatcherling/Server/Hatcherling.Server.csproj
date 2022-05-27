@@ -11,7 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\PostgreSQLDataAccess\PostgreSQLDataAccess.csproj" />
+		<ProjectReference Include="..\..\PostgreSQLDataAccess\PostgreSQLDAL.csproj" />
 		<ProjectReference Include="..\Client\Hatcherling.Client.csproj" />
 		<ProjectReference Include="..\Shared\Hatcherling.Shared.csproj" />
 	</ItemGroup>

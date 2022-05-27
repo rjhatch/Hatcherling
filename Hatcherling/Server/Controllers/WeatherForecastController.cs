@@ -1,6 +1,5 @@
 using Hatcherling.Shared;
 using Microsoft.AspNetCore.Mvc;
-using PostgreSQLDataAccess;
 
 namespace Hatcherling.Server.Controllers
 {
@@ -14,19 +13,17 @@ namespace Hatcherling.Server.Controllers
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IService<Person> _people;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IService<Person> people)
         {
             _logger = logger;
+            _people = people;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            PostgreSQLSDataAccess data = new PostgreSQLConnection();
-
-            data.Connect();
-
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
