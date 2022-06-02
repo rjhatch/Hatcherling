@@ -1,0 +1,43 @@
+﻿@page "/people"
+@using Hatcherling.Shared.Models
+@inject HttpClient Http;
+
+<h3>People</h3>
+
+@if (people == null)
+{
+    <p>Loading Data...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Organization Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var person in people)
+            {
+                <tr>
+                    <td>@person.Id</td>
+                    <td>@person.FirstName</td>
+                    <td>@person.LastName</td>
+                    <td>@person.FKOrganization</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Person>? people;
+
+    protected override async Task OnInitializedAsync()
+    {
+        people = await Http.GetFromJsonAsync<List<Person>>("api/people");
+    }
+}

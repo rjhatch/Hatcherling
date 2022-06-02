@@ -4,40 +4,80 @@
 
 namespace Hatcherling.Server.Modules.People
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PeopleController : ControllerBase
     {
+        private readonly IService<Person> _peopleService;
+
+        public PeopleController(IService<Person> peopleService)
+        {
+            _peopleService = peopleService;
+        }
+
         // GET: api/<PeopleController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<Person>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return await _peopleService.GetAll();
         }
 
         // GET api/<PeopleController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IResult> Get(Guid id)
         {
-            return "value";
+            var person = await _peopleService.Get(id);
+
+            if (person == null)
+                return Results.NotFound();
+
+            return Results.Ok(person);
+
         }
 
         // POST api/<PeopleController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IResult> Post(Person person)
         {
+            try
+            {
+                await _peopleService.Insert(person);
+                return Results.Ok();
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message);
+            }
         }
 
         // PUT api/<PeopleController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public async Task<IResult> Put(Person person)
         {
+            try
+            {
+                await _peopleService.Update(person);
+                return Results.Ok();
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message);
+            }
         }
 
         // DELETE api/<PeopleController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IResult> Delete(Guid id)
         {
+            try
+            {
+                await _peopleService.Delete(id);
+                return Results.Ok();
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message);
+            }
         }
     }
 }

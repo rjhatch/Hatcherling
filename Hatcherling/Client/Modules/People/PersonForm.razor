@@ -1,0 +1,18 @@
+﻿@using Hatcherling.Shared.Models;
+
+<h3>PersonForm</h3>
+
+<EditForm Model="Person" OnValidSubmit="HandleValidSubmit">
+    <label for="Id">Id</label>
+    <input type="text" disabled @bind-value="Person.Id"/>
+</EditForm>
+
+@code {
+    [Parameter]
+    public Person Person { get; set; } = new Person();
+
+    private void HandleValidSubmit()
+    {
+        
+    }
+}
