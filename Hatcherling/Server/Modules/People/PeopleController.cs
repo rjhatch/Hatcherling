@@ -2,82 +2,81 @@
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Hatcherling.Server.Modules.People
+namespace Hatcherling.Server.Modules.People;
+
+[Route("api/[controller]")]
+[ApiController]
+public class PeopleController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class PeopleController : ControllerBase
+    private readonly IService<Person> _peopleService;
+
+    public PeopleController(IService<Person> peopleService)
     {
-        private readonly IService<Person> _peopleService;
+        _peopleService = peopleService;
+    }
 
-        public PeopleController(IService<Person> peopleService)
+    // GET: api/<PeopleController>
+    [HttpGet]
+    public async Task<IEnumerable<Person>> Get()
+    {
+        return await _peopleService.GetAll();
+    }
+
+    // GET api/<PeopleController>/5
+    [HttpGet("{id}")]
+    public async Task<IResult> Get(Guid id)
+    {
+        var person = await _peopleService.Get(id);
+
+        if (person == null)
+            return Results.NotFound();
+
+        return Results.Ok(person);
+
+    }
+
+    // POST api/<PeopleController>
+    [HttpPost]
+    public async Task<IResult> Post(Person person)
+    {
+        try
         {
-            _peopleService = peopleService;
+            await _peopleService.Insert(person);
+            return Results.Ok();
         }
-
-        // GET: api/<PeopleController>
-        [HttpGet]
-        public async Task<IEnumerable<Person>> Get()
+        catch (Exception ex)
         {
-            return await _peopleService.GetAll();
+            return Results.Problem(ex.Message);
         }
+    }
 
-        // GET api/<PeopleController>/5
-        [HttpGet("{id}")]
-        public async Task<IResult> Get(Guid id)
+    // PUT api/<PeopleController>/5
+    [HttpPut]
+    public async Task<IResult> Put(Person person)
+    {
+        try
         {
-            var person = await _peopleService.Get(id);
-
-            if (person == null)
-                return Results.NotFound();
-
-            return Results.Ok(person);
-
+            await _peopleService.Update(person);
+            return Results.Ok();
         }
-
-        // POST api/<PeopleController>
-        [HttpPost]
-        public async Task<IResult> Post(Person person)
+        catch (Exception ex)
         {
-            try
-            {
-                await _peopleService.Insert(person);
-                return Results.Ok();
-            }
-            catch (Exception ex)
-            {
-                return Results.Problem(ex.Message);
-            }
+            return Results.Problem(ex.Message);
         }
+    }
 
-        // PUT api/<PeopleController>/5
-        [HttpPut]
-        public async Task<IResult> Put(Person person)
+    // DELETE api/<PeopleController>/5
+    [HttpDelete("{id}")]
+    public async Task<IResult> Delete(Guid id)
+    {
+        try
         {
-            try
-            {
-                await _peopleService.Update(person);
-                return Results.Ok();
-            }
-            catch (Exception ex)
-            {
-                return Results.Problem(ex.Message);
-            }
+            await _peopleService.Delete(id);
+            return Results.Ok();
         }
-
-        // DELETE api/<PeopleController>/5
-        [HttpDelete("{id}")]
-        public async Task<IResult> Delete(Guid id)
+        catch (Exception ex)
         {
-            try
-            {
-                await _peopleService.Delete(id);
-                return Results.Ok();
-            }
-            catch (Exception ex)
-            {
-                return Results.Problem(ex.Message);
-            }
+            return Results.Problem(ex.Message);
         }
     }
 }
