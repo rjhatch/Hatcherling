@@ -34,10 +34,5 @@ else
 }
 
 @code {
-    private List<Person>? people;
-
-    protected override async Task OnInitializedAsync()
-    {
-        people = await Http.GetFromJsonAsync<List<Person>>("api/people");
-    }
+    private List<Person>? people = new List<Person>();
 }

@@ -1,6 +1,5 @@
 using DataAccess;
 using Microsoft.EntityFrameworkCore;
-using PostgreSQLDAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,9 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-
-builder.Services.AddSingleton<IPostgreSQLDataAccess, PostgreSQLDataAccess>();
-builder.Services.AddSingleton<IService<Person>, PeopleService>();
 
 builder.Services.AddDbContext<HatcherlingContext>(options =>
 {

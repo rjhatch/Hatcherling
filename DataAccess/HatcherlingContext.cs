@@ -6,9 +6,13 @@ namespace DataAccess;
 public class HatcherlingContext : DbContext
 {
     public DbSet<Person>? People { get; set; }
+    public DbSet<Organization>? Organizations { get; set; }
 
     public HatcherlingContext(DbContextOptions<HatcherlingContext> options)
         : base(options) { }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+    }
 
 }
