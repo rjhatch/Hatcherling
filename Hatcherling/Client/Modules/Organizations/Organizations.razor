@@ -1,7 +1,31 @@
 ﻿@page "/organizations"
+@using Hatcherling.Shared.Models
 
 <h3>Organizations</h3>
 
-@code {
+@if (organizations == null)
+{
+    <p>Loading Data...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var org in organizations)
+            {
+                <tr>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
+@code {
+    private List<Organization> organizations = new List<Organization>();
 }
