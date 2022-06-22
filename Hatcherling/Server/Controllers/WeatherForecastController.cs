@@ -13,12 +13,10 @@ public class WeatherForecastController : ControllerBase
 };
 
     private readonly ILogger<WeatherForecastController> _logger;
-    private readonly IService<Person> _people;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger, IService<Person> people)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger)
     {
         _logger = logger;
-        _people = people;
     }
 
     [HttpGet]
