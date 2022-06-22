@@ -1,7 +1,13 @@
-﻿namespace Hatcherling.Shared.Models;
-public class Organization
+﻿using Hatcherling.Shared.Interfaces;
+
+namespace Hatcherling.Shared.Models;
+public class Organization : IModelBase
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = null!;
-    public ICollection<Person>? People { get; set; }
+    public DateTime DateCreated { get; set; }
+    public DateTime? DateDeleted { get; set; }
+
+    //Navigation properties
+    public List<Person>? People { get; set; }
 }
