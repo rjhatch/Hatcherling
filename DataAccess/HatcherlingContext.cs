@@ -5,8 +5,8 @@ namespace DataAccess;
 
 public class HatcherlingContext : DbContext
 {
-    public DbSet<Person>? People { get; set; }
-    public DbSet<Organization>? Organizations { get; set; }
+    public DbSet<Person> People { get; set; } = null!;
+    public DbSet<Organization> Organizations { get; set; } = null!;
 
     public HatcherlingContext(DbContextOptions<HatcherlingContext> options)
         : base(options) { }

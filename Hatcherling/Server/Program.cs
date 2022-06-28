@@ -1,4 +1,5 @@
 using DataAccess;
+using Hatcherling.Server.Modules.People;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +14,17 @@ builder.Services.AddDbContext<HatcherlingContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer"));
 });
 
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IPeopleService, PeopleService>();
+
 var app = builder.Build();
+
+app.UseSwaggerUI();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -26,6 +37,8 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseSwagger();
 
 app.UseHttpsRedirection();
 
