@@ -1,4 +1,4 @@
-﻿namespace Hatcherling.Shared.Interfaces;
+﻿namespace Hatcherling.Shared.Models.Interfaces;
 internal interface IModelBase
 {
     public DateTime DateCreated { get; set; }

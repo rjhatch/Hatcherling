@@ -1,5 +1,4 @@
 using DataAccess;
-using Hatcherling.Server.Modules.People;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,8 +18,6 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddScoped<IPeopleService, PeopleService>();
 
 var app = builder.Build();
 
