@@ -2,7 +2,7 @@
 
 namespace Hatcherling.Shared.Models;
 
-public class Person : IModelBase
+public class Person : ICreatedAndDeleted
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public string FirstName { get; set; } = null!;
@@ -10,9 +10,10 @@ public class Person : IModelBase
     public string Email { get; set; } = null!;
     public DateTime DateCreated { get; set; } = DateTime.Now;
     public DateTime? DateDeleted { get; set; }
+    public Guid OrganizationId { get; set; }
 
     //navigation properties
-    public List<Organization> Organizations { get; set; } = null!;
+    public Organization Organization { get; set; } = null!;
 
     public Login? Login { get; set; }
 }

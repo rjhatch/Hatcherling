@@ -6,7 +6,7 @@
 
 @if (people == null)
 {
-    <p>Loading Data...</p>
+    <span>@message</span>
 }
 else
 {
@@ -34,5 +34,26 @@ else
 }
 
 @code {
-    private List<Person>? people = new List<Person>();
+    private List<Person>? people;
+
+    private string message = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        message = "Loading Data...";
+
+        var response = await Http.GetFromJsonAsync<ServiceResponse<List<Person>>>("api/people");
+
+        if (response == null)
+            return;
+
+        if (response.Success)
+        {
+            people = response.Data;
+        }
+        else
+        {
+            message = response.Message;
+        }
+    }
 }
