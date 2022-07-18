@@ -13,21 +13,56 @@ public class OrganizationsController : ControllerBase
         _context = context;
     }
 
-    // GET: api/<OrganizationsController>
     [HttpGet]
-    public IEnumerable<string> Get()
+    public ActionResult<ServiceResponse<List<Organization>>> GetAllOrganizations()
     {
-        return new string[] { "value1", "value2" };
+        var organizations = _context.Organizations.Where(o => o.DateDeleted == null).ToList();
+
+        if (organizations.Any())
+        {
+            return Ok(new ServiceResponse<List<Organization>>
+            {
+                Data = organizations
+            });
+        }
+        else
+        {
+            return Ok(new ServiceResponse<List<Organization>>
+            {
+                Success = false,
+                Message = "No organizations found."
+            });
+        }
     }
 
-    // GET api/<OrganizationsController>/5
     [HttpGet("{id}")]
-    public string Get(int id)
+    public ActionResult<OrganizationDTO> GetOrganization(Guid id)
     {
-        return "value";
+        var organization = _context.Organizations.FirstOrDefault(o => o.Id == id);
+
+        var response = new ServiceResponse<OrganizationDTO>();
+
+        if (organization != null && organization.DateDeleted == null)
+        {
+            var foundOrganization = new OrganizationDTO
+            {
+                Id = organization.Id,
+                Name = organization.Name
+            };
+
+            response.Data = foundOrganization;
+
+            return Ok(response);
+        }
+        else
+        {
+            response.Success = false;
+            response.Message = "That organization was not found.";
+
+            return NotFound(response);
+        }
     }
 
-    // POST api/<OrganizationsController>
     [HttpPost]
     public ActionResult<ServiceResponse<Guid>> CreateOrganization(OrganizationDTO organization)
     {
@@ -42,15 +77,20 @@ public class OrganizationsController : ControllerBase
         return Ok(new ServiceResponse<Guid> { Data = newOrganization.Id });
     }
 
-    // PUT api/<OrganizationsController>/5
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    public void Put(Guid id, [FromBody] OrganizationDTO organization)
     {
     }
 
-    // DELETE api/<OrganizationsController>/5
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public void Delete(Guid id)
     {
+        var deletedOrganization = _context.Organizations.FirstOrDefault(o => o.Id == id);
+
+        if (deletedOrganization != null)
+        {
+            deletedOrganization.DateDeleted = DateTime.UtcNow;
+            _context.SaveChanges();
+        }
     }
 }

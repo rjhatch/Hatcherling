@@ -1,4 +1,5 @@
 ﻿@page "/people"
+@using Hatcherling.Shared.DTOs.People
 @using Hatcherling.Shared.Models
 @inject HttpClient Http;
 
@@ -26,7 +27,7 @@ else
                     <td>@person.Id</td>
                     <td>@person.FirstName</td>
                     <td>@person.LastName</td>
-                    <td>Placeholder Text</td>
+                    <td>@person.OrganizationId</td>
                 </tr>
             }
         </tbody>
@@ -34,7 +35,7 @@ else
 }
 
 @code {
-    private List<Person>? people;
+    private List<PersonDTO>? people;
 
     private string message = string.Empty;
 
@@ -42,7 +43,7 @@ else
     {
         message = "Loading Data...";
 
-        var response = await Http.GetFromJsonAsync<ServiceResponse<List<Person>>>("api/people");
+        var response = await Http.GetFromJsonAsync<ServiceResponse<List<PersonDTO>>>("api/people");
 
         if (response == null)
             return;

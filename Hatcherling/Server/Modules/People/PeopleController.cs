@@ -83,7 +83,7 @@ public class PeopleController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    public void Put(Guid id, [FromBody] PersonDTO person)
     {
     }
 
